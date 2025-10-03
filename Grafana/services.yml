@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  type: LoadBalancer
+  loadBalancerIP: <IL_TUO_IP_STATICO>  # Sostituisci con il tuo IP pubblico
+  selector:
+    app: grafana
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
