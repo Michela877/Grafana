@@ -15,22 +15,22 @@ if [ "$OPTION" == "1" ]; then
     echo "Deploy Prometheus..."
     kubectl apply -f Prometheus/configMap.yml -n $NAMESPACE
     kubectl apply -f Prometheus/deployment.yml -n $NAMESPACE
-    kubectl apply -f Prometheus/service.yml -n $NAMESPACE
+    kubectl apply -f Prometheus/services.yml -n $NAMESPACE
 
     echo "Deploy Loki..."
     kubectl apply -f Loki/configMap.yml -n $NAMESPACE
     kubectl apply -f Loki/deployment.yml -n $NAMESPACE
-    kubectl apply -f Loki/service.yml -n $NAMESPACE
+    kubectl apply -f Loki/services.yml -n $NAMESPACE
 
     echo "Deploy Tempo..."
     kubectl apply -f Tempo/configMap.yml -n $NAMESPACE
     kubectl apply -f Tempo/deployment.yml -n $NAMESPACE
-    kubectl apply -f Tempo/service.yml -n $NAMESPACE
+    kubectl apply -f Tempo/services.yml -n $NAMESPACE
 
     echo "Deploy Grafana..."
     kubectl apply -f Grafana/configMap.yml -n $NAMESPACE
     kubectl apply -f Grafana/deployment.yml -n $NAMESPACE
-    kubectl apply -f Grafana/service.yml -n $NAMESPACE
+    kubectl apply -f Grafana/services.yml -n $NAMESPACE
     kubectl apply -f Grafana/ingress.yml -n $NAMESPACE
 
     echo "Tutti i manifest sono stati applicati!"
@@ -39,19 +39,19 @@ if [ "$OPTION" == "1" ]; then
 elif [ "$OPTION" == "2" ]; then
     echo "Cancellazione di tutti i manifest..."
     kubectl delete -f Grafana/ingress.yml -n $NAMESPACE || true
-    kubectl delete -f Grafana/service.yml -n $NAMESPACE || true
+    kubectl delete -f Grafana/services.yml -n $NAMESPACE || true
     kubectl delete -f Grafana/deployment.yml -n $NAMESPACE || true
     kubectl delete -f Grafana/configMap.yml -n $NAMESPACE || true
 
-    kubectl delete -f Tempo/service.yml -n $NAMESPACE || true
+    kubectl delete -f Tempo/services.yml -n $NAMESPACE || true
     kubectl delete -f Tempo/deployment.yml -n $NAMESPACE || true
     kubectl delete -f Tempo/configMap.yml -n $NAMESPACE || true
 
-    kubectl delete -f Loki/service.yml -n $NAMESPACE || true
+    kubectl delete -f Loki/services.yml -n $NAMESPACE || true
     kubectl delete -f Loki/deployment.yml -n $NAMESPACE || true
     kubectl delete -f Loki/configMap.yml -n $NAMESPACE || true
 
-    kubectl delete -f Prometheus/service.yml -n $NAMESPACE || true
+    kubectl delete -f Prometheus/services.yml -n $NAMESPACE || true
     kubectl delete -f Prometheus/deployment.yml -n $NAMESPACE || true
     kubectl delete -f Prometheus/configMap.yml -n $NAMESPACE || true
 

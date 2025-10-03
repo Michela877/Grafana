@@ -13,22 +13,22 @@ if ($Option -eq "1") {
     Write-Host "Deploy Prometheus..."
     kubectl apply -f Prometheus/configMap.yml -n $Namespace
     kubectl apply -f Prometheus/deployment.yml -n $Namespace
-    kubectl apply -f Prometheus/service.yml -n $Namespace
+    kubectl apply -f Prometheus/services.yml -n $Namespace
 
     Write-Host "Deploy Loki..."
     kubectl apply -f Loki/configMap.yml -n $Namespace
     kubectl apply -f Loki/deployment.yml -n $Namespace
-    kubectl apply -f Loki/service.yml -n $Namespace
+    kubectl apply -f Loki/services.yml -n $Namespace
 
     Write-Host "Deploy Tempo..."
     kubectl apply -f Tempo/configMap.yml -n $Namespace
     kubectl apply -f Tempo/deployment.yml -n $Namespace
-    kubectl apply -f Tempo/service.yml -n $Namespace
+    kubectl apply -f Tempo/services.yml -n $Namespace
 
     Write-Host "Deploy Grafana..."
     kubectl apply -f Grafana/configMap.yml -n $Namespace
     kubectl apply -f Grafana/deployment.yml -n $Namespace
-    kubectl apply -f Grafana/service.yml -n $Namespace
+    kubectl apply -f Grafana/services.yml -n $Namespace
     kubectl apply -f Grafana/ingress.yml -n $Namespace
 
     Write-Host "Tutti i manifest sono stati applicati!"
@@ -38,19 +38,19 @@ if ($Option -eq "1") {
 
     Write-Host "Cancellazione di tutti i manifest..."
     kubectl delete -f Grafana/ingress.yml -n $Namespace -ErrorAction SilentlyContinue
-    kubectl delete -f Grafana/service.yml -n $Namespace -ErrorAction SilentlyContinue
+    kubectl delete -f Grafana/services.yml -n $Namespace -ErrorAction SilentlyContinue
     kubectl delete -f Grafana/deployment.yml -n $Namespace -ErrorAction SilentlyContinue
     kubectl delete -f Grafana/configMap.yml -n $Namespace -ErrorAction SilentlyContinue
 
-    kubectl delete -f Tempo/service.yml -n $Namespace -ErrorAction SilentlyContinue
+    kubectl delete -f Tempo/services.yml -n $Namespace -ErrorAction SilentlyContinue
     kubectl delete -f Tempo/deployment.yml -n $Namespace -ErrorAction SilentlyContinue
     kubectl delete -f Tempo/configMap.yml -n $Namespace -ErrorAction SilentlyContinue
 
-    kubectl delete -f Loki/service.yml -n $Namespace -ErrorAction SilentlyContinue
+    kubectl delete -f Loki/services.yml -n $Namespace -ErrorAction SilentlyContinue
     kubectl delete -f Loki/deployment.yml -n $Namespace -ErrorAction SilentlyContinue
     kubectl delete -f Loki/configMap.yml -n $Namespace -ErrorAction SilentlyContinue
 
-    kubectl delete -f Prometheus/service.yml -n $Namespace -ErrorAction SilentlyContinue
+    kubectl delete -f Prometheus/services.yml -n $Namespace -ErrorAction SilentlyContinue
     kubectl delete -f Prometheus/deployment.yml -n $Namespace -ErrorAction SilentlyContinue
     kubectl delete -f Prometheus/configMap.yml -n $Namespace -ErrorAction SilentlyContinue
 
