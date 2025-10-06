@@ -28,10 +28,11 @@ if [ "$OPTION" == "1" ]; then
     kubectl apply -f Tempo/services.yml -n $NAMESPACE
 
     echo "Deploy Grafana..."
-    kubectl apply -f Grafana/configMap.yml -n $NAMESPACE
     kubectl apply -f Grafana/deployment.yml -n $NAMESPACE
     kubectl apply -f Grafana/services.yml -n $NAMESPACE
     kubectl apply -f Grafana/ingress.yml -n $NAMESPACE
+    kubectl apply -f Grafana/configMap-tempo.yml -n $NAMESPACE
+    kubectl apply -f Grafana/configMap-loki.yml -n $NAMESPACE
 
     echo "Tutti i manifest sono stati applicati!"
     kubectl get all -n $NAMESPACE
@@ -41,7 +42,10 @@ elif [ "$OPTION" == "2" ]; then
     kubectl delete -f Grafana/ingress.yml -n $NAMESPACE || true
     kubectl delete -f Grafana/services.yml -n $NAMESPACE || true
     kubectl delete -f Grafana/deployment.yml -n $NAMESPACE || true
-    kubectl delete -f Grafana/configMap.yml -n $NAMESPACE || true
+    kubectl delete -f Grafana/configMap-tempo.yml -n $NAMESPACE || true
+    kubectl delete -f Grafana/configMap-loki.yml -n $NAMESPACE || true
+
+
 
     kubectl delete -f Tempo/services.yml -n $NAMESPACE || true
     kubectl delete -f Tempo/deployment.yml -n $NAMESPACE || true

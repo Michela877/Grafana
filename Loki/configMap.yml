@@ -1,17 +1,55 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-datasource-loki
+  name: loki-config
   namespace: monitoring
-  labels:
-    grafana_datasource: "1"
 data:
-  datasource.yaml: |-
-    apiVersion: 1
-    datasources:
-      - name: "Loki"
-        type: loki
-        access: proxy
-        url: http://loki.monitoring.svc.cluster.local:3100
-        jsonData:
-          maxLines: 1000
+  local-config.yaml: |
+    auth_enabled: false
+
+    server:
+      http_listen_port: 3100
+
+    common:
+      instance_addr: 127.0.0.1
+      path_prefix: /tmp/loki
+      storage:
+        filesystem:
+          chunks_directory: /tmp/loki/chunks
+          rules_directory: /tmp/loki/rules
+      replication_factor: 1
+
+    ingester:
+      wal:
+        enabled: false
+      chunk_idle_period: 5m
+      max_chunk_age: 1h
+      lifecycler:
+        ring:
+          kvstore:
+            store: inmemory
+          replication_factor: 1
+
+    schema_config:
+      configs:
+        - from: 2020-10-24
+          store: boltdb-shipper
+          object_store: filesystem
+          schema: v11
+          index:
+            prefix: index_
+            period: 24h
+
+    storage_config:
+      boltdb_shipper:
+        active_index_directory: /tmp/loki/index
+        cache_location: /tmp/loki/cache
+        shared_store: filesystem
+      filesystem:
+        directory: /tmp/loki/chunks
+
+    limits_config:
+      reject_old_samples: true
+      reject_old_samples_max_age: 168h
+      ingestion_rate_mb: 10
+      ingestion_burst_size_mb: 20
