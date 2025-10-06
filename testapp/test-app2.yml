@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-app
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      containers:
+      - name: app
+        image: python:3.9-alpine
+        command: ["/bin/sh"]
+        args:
+        - -c
+        - |
+          apk add --no-cache curl bash build-base libffi-dev openssl-dev python3-dev
+          pip install --no-cache-dir flask opentelemetry-api opentelemetry-sdk opentelemetry-exporter-otlp-proto-grpc
+          cat > app.py << 'PY'
+          from flask import Flask
+          import random, time, logging
+          from opentelemetry import trace
+          from opentelemetry.sdk.trace import TracerProvider
+          from opentelemetry.sdk.trace.export import BatchSpanProcessor
+          # NOTE: gRPC exporter import
+          from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
+
+          trace.set_tracer_provider(TracerProvider())
+          tracer_provider = trace.get_tracer_provider()
+          # gRPC exporter: endpoint should be host:port (no http://) for gRPC
+          otlp_exporter = OTLPSpanExporter(endpoint="tempo.monitoring.svc.cluster.local:4317", insecure=True)
+          tracer_provider.add_span_processor(BatchSpanProcessor(otlp_exporter))
+
+          app = Flask(__name__)
+          logging.basicConfig(level=logging.INFO)
+
+          @app.route('/')
+          def hello():
+              tracer = trace.get_tracer(__name__)
+              with tracer.start_as_current_span("web-request") as span:
+                  span.set_attribute("http.method", "GET")
+                  span.set_attribute("http.route", "/")
+                  time.sleep(random.uniform(0.05, 0.2))
+                  app.logger.info("Handled request to / - trace sent to Tempo")
+                  return "Hello from Python App with Tracing!"
+
+          @app.route('/health')
+          def health():
+              return "OK"
+
+          if __name__ == '__main__':
+              app.run(host='0.0.0.0', port=8080)
+          PY
+
+          # Run the app in background and generate traffic
+          python app.py &
+
+          while true; do
+            curl -s http://localhost:8080/ > /dev/null || true
+            sleep 5
+          done
+        ports:
+        - containerPort: 8080
+        env:
+        - name: OTEL_SERVICE_NAME
+          value: "python-app"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-app
+  namespace: default
+spec:
+  selector:
+    app: python-app
+  ports:
+  - port: 8080
+    targetPort: 8080

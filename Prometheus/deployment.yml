@@ -3,8 +3,6 @@ kind: Deployment
 metadata:
   name: prometheus
   namespace: monitoring
-  labels:
-    app: prometheus
 spec:
   replicas: 1
   selector:
@@ -15,15 +13,23 @@ spec:
       labels:
         app: prometheus
     spec:
+      serviceAccountName: prometheus  # CAMBIA QUI
       containers:
-        - name: prometheus
-          image: prom/prometheus:latest
-          ports:
-            - containerPort: 9090
-          resources:
-            requests:
-              memory: "512Mi"
-              cpu: "250m"
-            limits:
-              memory: "1Gi"
-              cpu: "500m"
+      - name: prometheus
+        image: prom/prometheus:latest
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/prometheus
+        - name: data
+          mountPath: /prometheus
+        ports:
+        - containerPort: 9090
+      securityContext:
+        runAsUser: 0
+      volumes:
+        - name: config-volume
+          configMap:
+            name: prometheus-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: prometheus-pvc

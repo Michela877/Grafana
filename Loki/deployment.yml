@@ -21,11 +21,19 @@ spec:
           ports:
             - containerPort: 3100
           args:
-            - "-config.file=/etc/loki/local-config.yaml"
+            - "-config.file=/etc/loki/loki.yaml"
           volumeMounts:
             - name: config
               mountPath: /etc/loki
+            - name: loki-storage
+              mountPath: /loki
+          securityContext:  # AGGIUNGI QUESTO
+            runAsUser: 0
+            runAsGroup: 0
       volumes:
         - name: config
           configMap:
             name: loki-config
+        - name: loki-storage
+          persistentVolumeClaim:
+            claimName: loki-pvc

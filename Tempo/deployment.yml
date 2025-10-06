@@ -17,15 +17,22 @@ spec:
     spec:
       containers:
         - name: tempo
-          image: grafana/tempo:1.5.0
+          image: grafana/tempo:2.3.1
           ports:
             - containerPort: 3200
+            - containerPort: 4317
+            - containerPort: 4318
           args:
             - "-config.file=/etc/tempo/tempo.yaml"
           volumeMounts:
             - name: config
               mountPath: /etc/tempo
+            - name: tempo-storage
+              mountPath: /tmp/tempo/traces   # qui vengono salvati i dati persistenti
       volumes:
         - name: config
           configMap:
             name: tempo-config
+        - name: tempo-storage
+          persistentVolumeClaim:
+            claimName: tempo-pvc

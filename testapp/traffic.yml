@@ -1,0 +1,36 @@
+# testapp/traffic-generator.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traffic-generator
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traffic-generator
+  template:
+    metadata:
+      labels:
+        app: traffic-generator
+    spec:
+      containers:
+      - name: generator
+        image: curlimages/curl:latest
+        command: ["/bin/sh"]
+        args:
+        - -c
+        - |
+          while true; do
+            # Genera traffico verso le app
+            echo "$(date): Calling complete-app..."
+            curl -s http://complete-app:8080/ || true
+            
+            echo "$(date): Calling python-app..."
+            curl -s http://python-app:8080/ || true
+            
+            echo "$(date): Generating error log..."
+            echo "$(date): ERROR - Simulated error in traffic generator | type=timeout service=external duration=2.5s" >> /var/log/app.log
+            
+            sleep 5
+          done
