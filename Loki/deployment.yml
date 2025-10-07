@@ -23,11 +23,14 @@ spec:
           args:
             - "-config.file=/etc/loki/loki.yaml"
           volumeMounts:
+            # ConfigMap per il file di configurazione
             - name: config
               mountPath: /etc/loki
+              readOnly: true
+            # PersistentVolumeClaim per storage log
             - name: loki-storage
               mountPath: /loki
-          securityContext:  # AGGIUNGI QUESTO
+          securityContext:
             runAsUser: 0
             runAsGroup: 0
       volumes:

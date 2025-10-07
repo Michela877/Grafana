@@ -20,18 +20,19 @@ data:
           - role: pod
 
         relabel_configs:
-          # Path ai log dei container nei pod
+          # Crea l'etichetta __path__ che punta ai log reali
           - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_pod_name, __meta_kubernetes_pod_container_name]
             target_label: __path__
             replacement: /var/log/pods/$1_$2_*/$3/*.log
 
-          # Etichette per filtrare in Grafana
+          # Etichette base (namespace, pod, container)
           - source_labels: [__meta_kubernetes_namespace]
             target_label: namespace
           - source_labels: [__meta_kubernetes_pod_name]
             target_label: pod
           - source_labels: [__meta_kubernetes_pod_container_name]
             target_label: container
+
 ---
 apiVersion: apps/v1
 kind: DaemonSet
