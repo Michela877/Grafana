@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -10,9 +11,14 @@ data:
       grpc_listen_port: 0
 
     clients:
-      - url: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
+      - url: http://loki:3100/loki/api/v1/push
+        backoff_config:
+          min_period: 1s
+          max_period: 30s
+          max_retries: 20
         batchwait: 1s
         batchsize: 1048576
+        timeout: 10s
 
     positions:
       filename: /run/promtail/positions.yaml
@@ -51,6 +57,17 @@ data:
         - __meta_kubernetes_pod_namespace
         - __meta_kubernetes_pod_name
         target_label: job
+      - action: replace
+        source_labels: [__meta_kubernetes_pod_name]
+        target_label: service
+
+    - job_name: kubernetes-system
+      static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: system
+          __path__: /var/log/*.log
 
     - job_name: kubernetes-system-containers
       static_configs:
@@ -63,6 +80,19 @@ data:
       - cri: {}
       - labeldrop:
         - filename
+
+    - job_name: journal
+      journal:
+        max_age: 12h
+        labels:
+          job: systemd-journal
+      relabel_configs:
+      - source_labels: ['__journal__systemd_unit']
+        target_label: 'unit'
+      - source_labels: ['__journal__hostname']
+        target_label: 'node'
+      - source_labels: ['__journal_syslog_identifier']
+        target_label: 'syslog_identifier'
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -94,6 +124,9 @@ spec:
         args:
           - --config.file=/etc/promtail/promtail.yaml
           - --client.external-labels=cluster=local
+        env:
+          - name: LOKI_URL
+            value: "http://10.110.82.123:3100/loki/api/v1/push"
         ports:
         - containerPort: 9080
           name: http
@@ -111,21 +144,16 @@ spec:
           failureThreshold: 3
           periodSeconds: 10
         securityContext:
+          privileged: true
           runAsUser: 0
-          runAsGroup: 0
-          privileged: false
-          readOnlyRootFilesystem: true
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - ALL
-            add:
-              - DAC_OVERRIDE  # Necessario per leggere i log
         volumeMounts:
         - name: promtail-config
           mountPath: /etc/promtail
         - name: varlog
           mountPath: /var/log
+          readOnly: true
+        - name: varlib
+          mountPath: /var/lib
           readOnly: true
         - name: run
           mountPath: /run/promtail
@@ -133,6 +161,12 @@ spec:
           mountPath: /var/lib/promtail
         - name: dockercontainers
           mountPath: /var/lib/docker/containers
+          readOnly: true
+        - name: journal
+          mountPath: /var/log/journal
+          readOnly: true
+        - name: etcmachineid
+          mountPath: /etc/machine-id
           readOnly: true
         resources:
           requests:
@@ -148,6 +182,9 @@ spec:
       - name: varlog
         hostPath:
           path: /var/log
+      - name: varlib
+        hostPath:
+          path: /var/lib
       - name: run
         hostPath:
           path: /run/promtail
@@ -157,6 +194,12 @@ spec:
       - name: dockercontainers
         hostPath:
           path: /var/lib/docker/containers
+      - name: journal
+        hostPath:
+          path: /var/log/journal
+      - name: etcmachineid
+        hostPath:
+          path: /etc/machine-id
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -180,6 +223,14 @@ rules:
   - get
   - watch
   - list
+- apiGroups:
+  - extensions
+  resources:
+  - podsecuritypolicies
+  verbs:
+  - use
+  resourceNames:
+  - promtail
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -209,12 +260,3 @@ spec:
     targetPort: http
   selector:
     app: promtail
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: monitoring
-  labels:
-    pod-security.kubernetes.io/enforce: privileged
-    pod-security.kubernetes.io/audit: privileged
-    pod-security.kubernetes.io/warn: privileged

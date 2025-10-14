@@ -17,7 +17,7 @@ if [ "$OPTION" == "1" ]; then
     kubectl apply -f Metrics/node-exporter.yml -n $NAMESPACE
 
     echo "deploy promtail"
-    kubectl apply -f Promtail/promtail.yml -n $NAMESPACE
+    kubectl apply -f Promtail/promtail2.yml -n $NAMESPACE
 
     echo "Deploy Prometheus..."
     kubectl apply -f Prometheus/serviceaccount.yml -n $NAMESPACE
@@ -78,7 +78,7 @@ elif [ "$OPTION" == "2" ]; then
     kubectl delete -f Metrics/kube-state-metrics.yaml -n $NAMESPACE || true
     kubectl delete -f Metrics/node-exporter.yml -n $NAMESPACE || true
 
-    kubectl delete -f Promtail/promtail.yml -n $NAMESPACE || true
+    kubectl delete -f Promtail/promtail2.yml -n $NAMESPACE || true
     kubectl delete -f testapp/test-app.yml -n default || true
     kubectl delete -f testapp/test-app2.yml -n default || true
     kubectl delete -f testapp/traffic.yml -n default || true

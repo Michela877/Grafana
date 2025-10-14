@@ -13,13 +13,13 @@ data:
 
     common:
       path_prefix: /loki
+      replication_factor: 1
       storage:
         filesystem:
           chunks_directory: /loki/chunks
           rules_directory: /loki/rules
-      replication_factor: 1
       ring:
-        instance_addr: 127.0.0.1
+        instance_addr: 0.0.0.0
         kvstore:
           store: inmemory
 
@@ -32,6 +32,14 @@ data:
           index:
             prefix: index_
             period: 24h
+
+    storage_config:
+      boltdb_shipper:
+        active_index_directory: /loki/index
+        cache_location: /loki/boltdb-cache
+        shared_store: filesystem
+      filesystem:
+        directory: /loki/chunks
 
     ruler:
       alertmanager_url: http://localhost:9093
