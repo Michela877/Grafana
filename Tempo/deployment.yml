@@ -20,15 +20,22 @@ spec:
           image: grafana/tempo:2.3.1
           ports:
             - containerPort: 3200
+            - containerPort: 9095
             - containerPort: 4317
             - containerPort: 4318
+            - containerPort: 14250
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14268
+            - containerPort: 9411
+            - containerPort: 55678
           args:
             - "-config.file=/etc/tempo/tempo.yaml"
           volumeMounts:
             - name: config
               mountPath: /etc/tempo
             - name: tempo-storage
-              mountPath: /tmp/tempo/traces   # qui vengono salvati i dati persistenti
+              mountPath: /var/tempo   # qui vengono salvati i dati persistenti
       volumes:
         - name: config
           configMap:

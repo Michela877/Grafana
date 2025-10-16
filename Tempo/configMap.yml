@@ -7,25 +7,53 @@ data:
   tempo.yaml: |
     server:
       http_listen_port: 3200
-
+      grpc_listen_port: 9095
+    
     distributor:
       receivers:
         otlp:
           protocols:
             grpc:
+              endpoint: "0.0.0.0:4317"
             http:
-
+              endpoint: "0.0.0.0:4318"
+        jaeger:
+          protocols:
+            grpc:
+              endpoint: "0.0.0.0:14250"
+            thrift_compact:
+              endpoint: "0.0.0.0:6831"
+            thrift_binary:
+              endpoint: "0.0.0.0:6832"
+            thrift_http:
+              endpoint: "0.0.0.0:14268"
+        zipkin:
+          endpoint: "0.0.0.0:9411"
+        opencensus:                    # ⬅️ Aggiunto OpenCensus
+          endpoint: "0.0.0.0:55678"
+    
     ingester:
       trace_idle_period: 10s
-      max_block_bytes: 1_000_000
+      max_block_bytes: 1000000
       max_block_duration: 5m
-
+    
     compactor:
       compaction:
         block_retention: 1h
-
+    
     storage:
       trace:
         backend: local
         local:
-          path: /tmp/tempo/traces
+          path: /var/tempo/traces
+
+    
+    metrics_generator:                 # ⬅️ Aggiunto metrics generator
+      registry:
+        external_labels:
+          cluster: "production"
+      processor:
+        service_graphs:
+          histogram_buckets: [0.1, 0.2, 0.4, 0.8, 1.6, 3.2, 6.4, 12.8]
+        span_metrics:
+          histogram_buckets: [0.1, 0.2, 0.4, 0.8, 1.6, 3.2, 6.4, 12.8]
