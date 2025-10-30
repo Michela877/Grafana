@@ -48,7 +48,9 @@ data:
           path: /var/tempo/traces
 
     
-    metrics_generator:                 # ⬅️ Aggiunto metrics generator
+    metrics_generator:
+      storage:
+        path: /var/tempo/metrics   # directory dove salvare le metriche
       registry:
         external_labels:
           cluster: "production"
@@ -57,3 +59,4 @@ data:
           histogram_buckets: [0.1, 0.2, 0.4, 0.8, 1.6, 3.2, 6.4, 12.8]
         span_metrics:
           histogram_buckets: [0.1, 0.2, 0.4, 0.8, 1.6, 3.2, 6.4, 12.8]
+

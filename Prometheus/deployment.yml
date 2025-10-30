@@ -14,6 +14,10 @@ spec:
         app: prometheus
     spec:
       serviceAccountName: prometheus  # CAMBIA QUI
+      securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
+        fsGroup: 65534
       containers:
       - name: prometheus
         image: prom/prometheus:latest
@@ -24,8 +28,18 @@ spec:
           mountPath: /prometheus
         ports:
         - containerPort: 9090
-      securityContext:
-        runAsUser: 0
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "250m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        securityContext:
+          runAsUser: 65534
+          runAsGroup: 65534
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
       volumes:
         - name: config-volume
           configMap:

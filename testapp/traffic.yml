@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: traffic-generator
-  namespace: default
+  namespace: testapp
 spec:
   replicas: 1
   selector:

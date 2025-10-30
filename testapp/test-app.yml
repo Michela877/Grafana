@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: complete-app
-  namespace: default
+  namespace: testapp
 spec:
   replicas: 2
   selector:
@@ -47,7 +47,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: complete-app
-  namespace: default
+  namespace: testapp
 spec:
   selector:
     app: complete-app
