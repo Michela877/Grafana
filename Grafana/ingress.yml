@@ -4,15 +4,20 @@ metadata:
   name: grafana-ingress
   namespace: monitoring
   annotations:
-    kubernetes.io/ingress.class: nginx
 spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - asv-testmonitoring.assolombardaservizi.it   # dominio del certificato
+      secretName: azure-tls                # il Secret che hai creato
   rules:
-    - http:
+    - host: asv-testmonitoring.assolombardaservizi.it
+      http:
         paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: grafana
-                port:
-                  number: 3000
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: grafana
+              port:
+                number: 3000

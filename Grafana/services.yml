@@ -5,7 +5,7 @@ metadata:
   namespace: monitoring
 spec:
   type: LoadBalancer
-  loadBalancerIP: 172.199.47.170 # Sostituisci con il tuo IP pubblico
+  loadBalancerIP: <IL_TUO_IP_STATICO> # Sostituisci con il tuo IP pubblico
   selector:
     app: grafana
   ports:
