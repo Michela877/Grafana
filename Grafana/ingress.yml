@@ -8,10 +8,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - asv-testmonitoring.assolombardaservizi.it   # dominio del certificato
-      secretName: azure-tls                # il Secret che hai creato
+        - <IL_TUO_HOST>   # dominio del certificato
+      secretName: <IL_TUO_SECRETCERTIFICATE>                # il Secret che hai creato
   rules:
-    - host: asv-testmonitoring.assolombardaservizi.it
+    - host: <IL_TUO_HOST>
       http:
         paths:
         - path: /
