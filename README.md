@@ -1,6 +1,6 @@
 # Setup iniziale Grafana pack
 
-Questa guida descrive i passaggi per configurare l’ambiente di monitoraggio `Grafana` su Kubernetes.
+Questa guida descrive i passaggi per configurare l’ambiente di monitoraggio SU UNA VM IN LOCALE `Grafana` su Kubernetes.
 
 ---
 
