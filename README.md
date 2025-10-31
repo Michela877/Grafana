@@ -4,6 +4,15 @@ Questa guida descrive i passaggi per configurare l’ambiente di monitoraggio `G
 
 ---
 
+## 1️⃣ Creazione dell'ingress controller
+
+utilizzare questo comando
+
+```bash
+helm install ingress-nginx ingress-nginx/ingress-nginx   --namespace ingress-nginx --create-namespace   --set controller.service.loadBalancerIP=<IL_TUO_IP_STATICO>
+```
+
+
 ## 1️⃣ Creazione del namespace
 
 Creare il namespace dedicato alle applicazioni:
