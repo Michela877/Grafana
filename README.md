@@ -4,6 +4,16 @@ Questa guida descrive i passaggi per configurare l’ambiente di monitoraggio `G
 
 ---
 
+## 1️⃣ Creazione del ningress controller
+
+utilizzare questo comando
+
+```bash
+helm install ingress-nginx ingress-nginx/ingress-nginx   --namespace ingress-nginx --create-namespace   --set controller.service.type=LoadBalancer
+```
+
+---
+
 ## 1️⃣ Creazione del namespace
 
 Creare il namespace dedicato alle applicazioni:
@@ -22,6 +32,8 @@ ma prima bisognera configurare il service con il load balancer o senno l'ingress
 kubectl apply -k "path assoluto in locale"
 ```
 
+---
+
 ## 3️⃣ credenziali per accedere
 
 le credenziali base per accedere sono 
@@ -31,6 +43,19 @@ password admin
 
 una volta eseguito l'accesso e cambiato la password si avra tutto lo stack grafana configurato
 
+se da accesso sbagliato usare questi comandi prima entrare nel pod poi cambiare la password
+
+```bash
+# Accedi al pod e resetta la password
+sudo kubectl exec -it grafana-7ff457789c-56dj5 -n monitoring -- /bin/sh
+```
+
+```bash
+# Dentro il container, esegui:
+grafana-cli admin reset-admin-password admin
+```
+
+---
 
 ## 4️⃣ configurazione dashboard Grafana Prometheus
 

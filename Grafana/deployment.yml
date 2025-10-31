@@ -14,9 +14,9 @@ spec:
         app: grafana
     spec:
       securityContext:
-        runAsUser: 472
-        runAsGroup: 472
-        fsGroup: 472 
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
       containers:
       - name: grafana
         image: grafana/grafana:latest
@@ -35,8 +35,8 @@ spec:
             memory: "512Mi"
             cpu: "500m"
         securityContext:
-          runAsUser: 472
-          runAsGroup: 472
+          runAsUser: 0
+          runAsGroup: 0
         volumeMounts:
         - name: datasources
           mountPath: /etc/grafana/provisioning/datasources

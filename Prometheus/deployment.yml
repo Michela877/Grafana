@@ -15,9 +15,9 @@ spec:
     spec:
       serviceAccountName: prometheus  # CAMBIA QUI
       securityContext:
-        runAsUser: 65534
-        runAsGroup: 65534
-        fsGroup: 65534
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
       containers:
       - name: prometheus
         image: prom/prometheus:latest
@@ -36,8 +36,8 @@ spec:
             memory: "2Gi"
             cpu: "1000m"
         securityContext:
-          runAsUser: 65534
-          runAsGroup: 65534
+          runAsUser: 0
+          runAsGroup: 0
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
       volumes:

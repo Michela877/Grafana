@@ -16,9 +16,9 @@ spec:
         app: tempo
     spec:
       securityContext:
-        runAsUser: 10001
-        runAsGroup: 10001
-        fsGroup: 10001
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
       containers:
         - name: tempo
           image: grafana/tempo:2.3.1
@@ -43,8 +43,8 @@ spec:
               memory: "1Gi"
               cpu: "1000m"
           securityContext:
-            runAsUser: 10001
-            runAsGroup: 10001
+            runAsUser: 0
+            runAsGroup: 0
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
           volumeMounts:
