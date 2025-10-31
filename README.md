@@ -32,11 +32,11 @@ password admin
 una volta eseguito l'accesso e cambiato la password si avra tutto lo stack grafana configurato
 
 
-## 4️⃣ configurazione dashboard
+## 4️⃣ configurazione dashboard Grafana Prometheus
 
 15661 questo codice ti rilascia la dashboard con prometheus per tutto il cluster kubernetes
 
-qui sotto invece i file yaml per i log dei singoli container con loki da specificare il passaggio 
+## 4️⃣ configurazione dashboard Loki Grafana
 
 QUI SOTTO DASHBOARD PER LOKI PER I LOG DEI SINGOLI CONTAINER
 usare questa regex ^/var/log/containers/[a-zA-Z0-9-]+_[a-zA-Z0-9-]+_.+\.log$
@@ -309,7 +309,7 @@ po su query tipe mettere label values e poi label filename
 }
 ```
 
-
+## 4️⃣ configurazione dashboard Tempo Grafana
 
 ```yaml
 {
