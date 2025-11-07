@@ -338,11 +338,11 @@ po su query tipe mettere label values e poi label filename
       }
     ]
   },
-  "description": "Shows high level LLM successes and failures.",
+  "description": "Shows high level LLM successes and failures with Trace Explorer.",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 5,
+  "id": 18,
   "links": [],
   "panels": [
     {
@@ -487,7 +487,7 @@ po su query tipe mettere label values e poi label filename
       },
       "gridPos": {
         "h": 10,
-        "w": 17,
+        "w": 18,
         "x": 6,
         "y": 0
       },
@@ -522,76 +522,35 @@ po su query tipe mettere label values e poi label filename
       "title": "Failed Validations",
       "transformations": [
         {
-          "disabled": true,
           "id": "organize",
           "options": {
             "excludeByName": {
-              "Duration": true,
-              "Name": true,
+              "Duration": false,
+              "Name": false,
               "Prompt": true,
               "Prompt 1": false,
               "Prompt 2": true,
               "Prompt 3": true,
               "Prompt 4": true,
               "Span ID": false,
-              "Start time": true,
-              "Trace Name": true,
-              "Trace Service": true,
-              "outcome1": true,
-              "outcome2": true,
-              "outcome3": true,
-              "outcome4": true,
-              "outcome5": true,
+              "Start time": false,
+              "Trace Name": false,
+              "Trace Service": false,
+              "outcome1": false,
+              "outcome2": false,
+              "outcome3": false,
+              "outcome4": false,
+              "outcome5": false,
               "output.value": true,
               "traceIdHidden": false
             },
             "includeByName": {},
-            "indexByName": {
-              "Duration": 7,
-              "LLM Response": 9,
-              "Name": 5,
-              "Prompt 1": 8,
-              "Prompt 2": 10,
-              "Prompt 3": 11,
-              "Prompt 4": 12,
-              "Span ID": 3,
-              "Start time": 4,
-              "Trace Name": 2,
-              "Trace Service": 1,
-              "outcome1": 13,
-              "outcome2": 14,
-              "outcome3": 15,
-              "outcome4": 16,
-              "outcome5": 17,
-              "output.value": 6,
-              "traceIdHidden": 0
-            },
+            "indexByName": {},
             "renameByName": {
               "Message History": "",
               "Prompt 1": "Prompt"
             }
           }
-        },
-        {
-          "disabled": true,
-          "id": "convertFieldType",
-          "options": {
-            "conversions": [
-              {
-                "destinationType": "boolean",
-                "targetField": "outcome1"
-              },
-              {
-                "destinationType": "boolean",
-                "targetField": "outcome2"
-              }
-            ],
-            "fields": {}
-          }
-        },
-        {
-          "id": "organize",
-          "options": {}
         }
       ],
       "type": "table"
@@ -883,8 +842,8 @@ po su query tipe mettere label values e poi label filename
         "overrides": []
       },
       "gridPos": {
-        "h": 16,
-        "w": 11,
+        "h": 17,
+        "w": 12,
         "x": 12,
         "y": 11
       },
@@ -926,116 +885,33 @@ po su query tipe mettere label values e poi label filename
       "title": "All Guard Runs",
       "transformations": [
         {
-          "disabled": true,
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "alias": "Prompt 1",
-                "path": "inputs.msgHistory[0]['content']"
-              },
-              {
-                "alias": "LLM Response",
-                "path": "outputs.llmResponseInfo.output"
-              },
-              {
-                "alias": "Prompt 2",
-                "path": "inputs.msgHistory[1]['content']"
-              },
-              {
-                "alias": "Prompt 3",
-                "path": "inputs.msgHistory[2]['content']"
-              },
-              {
-                "alias": "Prompt 4",
-                "path": "inputs.msgHistory[3]['content']"
-              },
-              {
-                "alias": "outcome1",
-                "path": "outputs.validatorLogs[0].validationResult.outcome"
-              },
-              {
-                "alias": "outcome2",
-                "path": "outputs.validatorLogs[1].validationResult.outcome"
-              },
-              {
-                "alias": "outcome3",
-                "path": "outputs.validatorLogs[2].validationResult.outcome"
-              },
-              {
-                "alias": "outcome4",
-                "path": "outputs.validatorLogs[3].validationResult.outcome"
-              },
-              {
-                "alias": "outcome5",
-                "path": "outputs.validatorLogs[4].validationResult.outcome"
-              }
-            ]
-          }
-        },
-        {
-          "disabled": true,
           "id": "organize",
           "options": {
             "excludeByName": {
-              "Duration": true,
-              "Name": true,
+              "Duration": false,
+              "Name": false,
               "Prompt": true,
               "Prompt 1": false,
               "Prompt 2": true,
               "Prompt 3": true,
               "Prompt 4": true,
               "Span ID": false,
-              "Start time": true,
-              "Trace Name": true,
-              "Trace Service": true,
-              "outcome1": true,
-              "outcome2": true,
-              "outcome3": true,
-              "outcome4": true,
-              "outcome5": true,
+              "Start time": false,
+              "Trace Name": false,
+              "Trace Service": false,
+              "outcome1": false,
+              "outcome2": false,
+              "outcome3": false,
+              "outcome4": false,
+              "outcome5": false,
               "output.value": true,
-              "traceIdHidden": true
+              "traceIdHidden": false
             },
-            "includeByName": {},
-            "indexByName": {
-              "Duration": 7,
-              "LLM Response": 9,
-              "Name": 5,
-              "Prompt 1": 8,
-              "Prompt 2": 10,
-              "Prompt 3": 11,
-              "Prompt 4": 12,
-              "Span ID": 3,
-              "Start time": 4,
-              "Trace Name": 2,
-              "Trace Service": 1,
-              "outcome1": 13,
-              "outcome2": 14,
-              "outcome3": 15,
-              "outcome4": 16,
-              "outcome5": 17,
-              "output.value": 6,
-              "traceIdHidden": 0
-            },
-            "orderByMode": "manual",
-            "renameByName": {
-              "Duration": "",
-              "Message History": "",
-              "Prompt 1": "Prompt"
-            }
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
             "includeByName": {},
             "indexByName": {},
             "renameByName": {
-              "Span ID": ""
+              "Message History": "",
+              "Prompt 1": "Prompt"
             }
           }
         }
@@ -1074,6 +950,7 @@ po su query tipe mettere label values e poi label filename
               "mode": "off"
             }
           },
+          "fieldMinMax": false,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -1089,7 +966,23 @@ po su query tipe mettere label values e poi label filename
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "80+"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -1107,9 +1000,9 @@ po su query tipe mettere label values e poi label filename
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": false
         },
-        "orientation": "auto",
+        "orientation": "horizontal",
         "showValue": "auto",
         "stacking": "none",
         "tooltip": {
@@ -1118,7 +1011,7 @@ po su query tipe mettere label values e poi label filename
           "sort": "none"
         },
         "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 0
+        "xTickLabelSpacing": 100
       },
       "pluginVersion": "12.2.1",
       "targets": [
@@ -1175,14 +1068,95 @@ po su query tipe mettere label values e poi label filename
         }
       ],
       "type": "barchart"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 28
+      },
+      "id": 9,
+      "panels": [],
+      "title": "Trace Explorer",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "tempo",
+        "uid": "P214B5B846CF3925F"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 31,
+        "w": 24,
+        "x": 0,
+        "y": 29
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "spanFilters": {
+          "criticalPathOnly": false,
+          "matchesOnly": false,
+          "serviceNameOperator": "=",
+          "spanNameOperator": "="
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "tempo",
+            "uid": "P214B5B846CF3925F"
+          },
+          "query": "$trace_id",
+          "queryType": "traceql",
+          "refId": "A",
+          "serviceMapUseNativeHistograms": false
+        }
+      ],
+      "title": "Trace Timeline - Insert Trace ID above to view details",
+      "type": "traces"
     }
   ],
   "preload": false,
-  "refresh": "",
+  "refresh": "5s",
   "schemaVersion": 42,
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "text": "",
+          "value": ""
+        },
+        "label": "Trace ID",
+        "name": "trace_id",
+        "options": [
+          {
+            "selected": true,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "",
+        "type": "textbox"
+      }
+    ]
   },
   "time": {
     "from": "now-1h",
@@ -1190,8 +1164,8 @@ po su query tipe mettere label values e poi label filename
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Guardrails Starter Dashboard",
-  "uid": "dff9fb38-6dda-40ff-8e65-7b188d9f607a",
-  "version": 14
+  "title": "Guardrails Dashboard with Trace Explorer",
+  "uid": "dff9fb38-6dda-40ff-8e65-7b188d9f607b",
+  "version": 1
 }
 ```
