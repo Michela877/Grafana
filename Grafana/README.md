@@ -108,8 +108,9 @@ Alert state if no data or all values are null (normal)
 Alert state if execution error or timeout (normal)
 ---
 6. Configure notification message
+```bash
 Pod {{ $labels.pod }} nel namespace nomenamespaces è in stato {{ $labels.reason }}
-
+```
 
 
 
