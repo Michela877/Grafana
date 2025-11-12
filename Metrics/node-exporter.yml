@@ -28,10 +28,16 @@ spec:
         - name: rootfs
           mountPath: /host
           readOnly: true
+        - name: udev
+          mountPath: /run/udev
+          readOnly: true
       volumes:
       - name: rootfs
         hostPath:
           path: /
+      - name: udev
+        hostPath:
+          path: /run/udev
       hostNetwork: true
       hostPID: true
       tolerations:
