@@ -21,7 +21,7 @@ spec:
         fsGroup: 10001
       containers:
         - name: tempo
-          image: grafana/tempo:2.3.1
+          image: grafana/tempo:2.9.0 #creato inizialmente con 2.3.1
           ports:
             - containerPort: 3200
             - containerPort: 9095

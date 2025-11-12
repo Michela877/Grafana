@@ -19,7 +19,7 @@ spec:
         fsGroup: 472 
       containers:
       - name: grafana
-        image: grafana/grafana:latest #12.2.1 fino a qui verificata e funzioinante
+        image: grafana/grafana:12.2.1 #12.2.1 fino a qui verificata e funzioinante creato inizialmente con latest
         ports:
         - containerPort: 3000
         env:

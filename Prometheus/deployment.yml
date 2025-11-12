@@ -20,7 +20,7 @@ spec:
         fsGroup: 65534
       containers:
       - name: prometheus
-        image: prom/prometheus:latest #3.7.3 fino a qui verificata e funzioinante
+        image: prom/prometheus:v3.7.3 #v3.7.3 fino a qui verificata e funzioinante creato inizialmente con latest
         volumeMounts:
         - name: config-volume
           mountPath: /etc/prometheus
