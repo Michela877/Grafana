@@ -65,6 +65,19 @@ asv:
               value: "http://tempo.monitoring.svc.cluster.local:9411/api/v2/spans"
 ```
 
+# configurazione permessi utenti per ogni pod da mettere nel deployment (optional per deploymeny applicativo)
+
+```bash
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+          readOnlyRootFilesystem: true
+```
+
 # Query da applicare al traceQL
 
 visualizza tutti gli span con status 200

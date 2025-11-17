@@ -40,18 +40,6 @@ password admin
 
 una volta eseguito l'accesso e cambiato la password si avra tutto lo stack grafana configurato
 
-## 4️⃣ configurazione permessi utenti per ogni pod da mettere nel deployment (optional non grafana)
-
-```bash
-        securityContext:
-          runAsUser: 1000
-          runAsGroup: 1000
-          runAsNonRoot: true
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop: ["ALL"]
-          readOnlyRootFilesystem: true
-```
 
 ## 4️⃣ configurazione dashboard Grafana Prometheus
 
