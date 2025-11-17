@@ -23,6 +23,9 @@ data:
         kvstore:
           store: inmemory
 
+    limits_config:                # <-- aggiunta sezione retention
+      retention_period: 168h      # 7 giorni
+
     schema_config:
       configs:
         - from: 2020-10-24
