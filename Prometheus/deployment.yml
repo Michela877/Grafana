@@ -21,6 +21,10 @@ spec:
       containers:
       - name: prometheus
         image: prom/prometheus:v3.7.3 #v3.7.3 fino a qui verificata e funzioinante creato inizialmente con latest
+        args:                                     # <-- aggiungi questa sezione per retention
+        - "--config.file=/etc/prometheus/prometheus.yml"
+        - "--storage.tsdb.path=/prometheus"
+        - "--storage.tsdb.retention.time=7d"     # <-- retention
         volumeMounts:
         - name: config-volume
           mountPath: /etc/prometheus
