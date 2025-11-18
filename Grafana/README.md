@@ -79,7 +79,7 @@ stringData:
 ```
 
 
-# creazione alert alerting su rules 
+# creazione alert alerting su rules per tutti i pod namespaces
 una volta creato il tutto bisognera creare le regole di alert questa qui sotto bisognera mettere prometheus tramite code successivamente su options dichiarare le variabili
 questa regola sotto manda gli alert per ogni errore che fa il pod quindi crashloop imagepullerro ecc anche i container creating gestisce tutto cio che succede
 
@@ -112,6 +112,36 @@ Alert state if execution error or timeout (normal)
 Pod {{ $labels.pod }} nel namespace nomenamespaces è in stato {{ $labels.reason }}
 ```
 
+# creazione alert alerting su rules per richieste http
+una volta creato il tutto bisognera creare le regole di alert questa qui sotto bisognera mettere prometheus tramite code successivamente su options dichiarare le variabili
+questa regola sotto manda gli alert per ogni errore di un sito web dai 200 ai 599
+
+2. Define query and alert condition
+prometheus Options 5 minutes, MD = 43200, Min. Interval = 1
+```bash
+probe_http_status_code
+```
+se da problemi mettere labelfilter instance senza nulla
+---
+Options Legend: auto Format: Time series Step: Type: Range
+
+---
+WHEN Last OF QUERY Is whithin range 400 to 599
+
+
+4. Set evaluation behavior
+Pending period 1m
+Keep firing for 1m
+---
+Configure no data and error handling
+Alert state if no data or all values are null (normal)
+Alert state if execution error or timeout (normal)
+---
+6. Configure notification message
+```bash
+summary: "HTTP Error {{ $value }} on {{ $labels.instance }}"
+description: "Il sito {{ $labels.instance }} restituisce errore HTTP {{ $value }}"
+```
 
 
 
