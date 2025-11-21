@@ -1,17 +1,25 @@
 # Setup iniziale Grafana pack
 
 Questa guida descrive i passaggi per configurare l’ambiente di monitoraggio `Grafana` su Kubernetes.
+Blackbox serve per collegamento prometheus per testare se i siti sono con risposta 200 con la sua dashboard
+loki serve per monitorare i logs dei pods del cluster kubernetes
+Metrics per far funzionare le metriche generali di prometheus
+Promtail per inviare i log a loki sempre del monitoraggio cluste kubernetes
+tempo per monitorare tutte le richieste che vengono fatte ai siti web o servizi backend
 
 ---
 
 ## 1️⃣ Creazione dell'ingress controller
 
-utilizzare questo comando
+utilizzare questo comando per nginx da marzo 2026 sara deprecato
 
 ```bash
 helm install ingress-nginx ingress-nginx/ingress-nginx   --namespace ingress-nginx --create-namespace   --set controller.service.loadBalancerIP=<IL_TUO_IP_STATICO>
 ```
-
+alternativa usare projectcontour
+```bash
+helm install contour projectcontour/contour --namespace projectcontour --create-namespace --set gatewayAPI.enabled=true --set envoy.service.type=LoadBalancer --set envoy.service.loadBalancerIP=<IL_TUO_IP_STATICO>
+```
 
 ## 1️⃣ Creazione del namespace
 
