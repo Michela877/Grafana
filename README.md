@@ -9,18 +9,75 @@ tempo per monitorare tutte le richieste che vengono fatte ai siti web o servizi 
 
 ---
 
-## 1️⃣ Creazione dell'ingress controller
+## 1️⃣ Creazione dell'ingress controller nginx deprecato marzo 2026
 
 utilizzare questo comando per nginx da marzo 2026 sara deprecato
 
 ```bash
 helm install ingress-nginx ingress-nginx/ingress-nginx   --namespace ingress-nginx --create-namespace   --set controller.service.loadBalancerIP=<IL_TUO_IP_STATICO>
 ```
-alternativa usare projectcontour
+
+## 1️⃣ Creazione dell'ingress controller  envoy gateway
+alternativa usare envoy gateway adatto per produzione
 ```bash
-helm install contour projectcontour/contour --namespace projectcontour --create-namespace --set gatewayAPI.enabled=true --set envoy.service.type=LoadBalancer --set envoy.service.loadBalancerIP=<IL_TUO_IP_STATICO>
+helm install eg oci://docker.io/envoyproxy/gateway-helm --version v1.6.0 -n envoy-gateway-system --create-namespace    
 ```
 
+manifest per envoy gateway chiamato gateway.yaml questo crea un ip statico per quanto riguarda azure
+```bash
+# 3️⃣ GatewayClass
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  name: envoy-gateway-class
+spec:
+  controllerName: gateway.envoyproxy.io/gatewayclass-controller
+---
+# 4️⃣ Gateway (LoadBalancer)
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: public-gateway
+  namespace: envoy-gateway-system
+spec:
+  gatewayClassName: envoy-gateway-class
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+    - name: https
+      protocol: HTTPS
+      port: 443
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: azure-tls 
+            kind: Secret
+```
+manifest per envoy gateway chiamato httproute.yaml
+```bash
+# 5️⃣ HTTPRoute
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: nomeservizio-httproute
+  namespace: envoy-gateway-system
+spec:
+  parentRefs:
+    - name: public-gateway
+      namespace: envoy-gateway-system
+#  hostnames:
+#    - "url dominio con questo commentato usa indirizzo ip che crea il gateway-yaml"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: nome-del-service-servizio
+          namespace: envoy-gateway-system
+          port: 4000
+```
 ## 1️⃣ Creazione del namespace
 
 Creare il namespace dedicato alle applicazioni:
