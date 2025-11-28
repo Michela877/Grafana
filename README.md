@@ -22,8 +22,25 @@ alternativa usare envoy gateway adatto per produzione
 ```bash
 helm install eg oci://docker.io/envoyproxy/gateway-helm --version v1.6.0 -n envoy-gateway-system --create-namespace    
 ```
+## Questa parte per aggiornare il gateway api o fare il downgrade
+```bash
+helm upgrade eg oci://docker.io/envoyproxy/gateway-helm --version v1.6.0 -n envoy-gateway-system
+```
+# Controlla le immagini correnti
+```bash
+kubectl get pod envoy-gateway-6b7454b596-ms6gl -n envoy-gateway-system -o jsonpath='{.spec.containers[*].image}'
+```
+Dovresti vedere: docker.io/envoyproxy/gateway:v1.5.0
+```bash
+kubectl get pods -n envoy-gateway-system -o jsonpath='{.items[*].spec.containers[*].image}'
+```
+Cerca eventuali pod "fantasma" della 1.6.0
+```bash
+kubectl get pods -n envoy-gateway-system -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.containers[*].image}{"\n"}{end}'
+```
 
-manifest per envoy gateway chiamato gateway.yaml questo crea un ip statico per quanto riguarda azure
+# manifest per envoy gateway chiamato gateway.yaml questo crea un ip statico per quanto riguarda azure
+
 ```bash
 # 3️⃣ GatewayClass
 apiVersion: gateway.networking.k8s.io/v1
@@ -54,7 +71,7 @@ spec:
           - name: azure-tls 
             kind: Secret
 ```
-manifest per envoy gateway chiamato httproute.yaml
+# manifest per envoy gateway chiamato httproute.yaml
 ```bash
 # 5️⃣ HTTPRoute
 apiVersion: gateway.networking.k8s.io/v1
@@ -66,6 +83,7 @@ spec:
   parentRefs:
     - name: public-gateway
       namespace: envoy-gateway-system
+#     sectionName: http
 #  hostnames:
 #    - "url dominio con questo commentato usa indirizzo ip che crea il gateway-yaml"
   rules:
