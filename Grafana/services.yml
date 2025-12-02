@@ -4,8 +4,8 @@ metadata:
   name: grafana
   namespace: monitoring
 spec:
-  type: LoadBalancer
-  loadBalancerIP: <IL_TUO_IP_STATICO> # Sostituisci con il tuo IP pubblico
+  type: LoadBalancer    #commentare questi due se si vuole deployare con gateway ed url per grafana
+  loadBalancerIP: <IL_TUO_IP_STATICO> # Sostituisci con il tuo IP pubblico commentare questi due se si vuole deployare con gateway ed url per grafana
   selector:
     app: grafana
   ports:

@@ -10,7 +10,7 @@ spec:
       namespace: envoy-gateway-system
 #     sectionName: http
   hostnames:
-    - "asv-monitoring.assolombardaservizi.it"
+    - "IL TUO HOST"
   rules:
     # Regola principale per SSR su /
     - matches:
