@@ -105,7 +105,7 @@ apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
   name: allow-httproute-to-services
-  namespace: asv-apps  # Namespace dove vivono i Service
+  namespace: apps  # Namespace dove vivono i Service backend
 spec:
   from:
     - group: gateway.networking.k8s.io
