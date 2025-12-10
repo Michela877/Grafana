@@ -96,6 +96,26 @@ spec:
           namespace: envoy-gateway-system
           port: 4000
 ```
+
+# manifest per envoy gateway chiamato ReferenceGrant.yaml permette di collegare i bakcend nei namespace diversi al namespace di envoy gateway cosi da collegarsi al frontend esposto
+
+```bash
+# 5️⃣ ReferenceGrant
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: ReferenceGrant
+metadata:
+  name: allow-httproute-to-services
+  namespace: asv-apps  # Namespace dove vivono i Service
+spec:
+  from:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      namespace: envoy-gateway-system
+  to:
+    - group: ""        # Core API group (vuoto) per Service
+      kind: Service
+
+```
 ## 1️⃣ Creazione del namespace
 
 Creare il namespace dedicato alle applicazioni:
