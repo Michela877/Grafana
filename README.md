@@ -148,6 +148,11 @@ una volta eseguito l'accesso e cambiato la password si avra tutto lo stack grafa
 
 15661 questo codice ti rilascia la dashboard con prometheus per tutto il cluster kubernetes
 
+questo query prometheus creando la dashboard da capo si usa e su visualization usare stat 
+
+```bash
+sum by(namespace, pod)(kube_pod_status_phase{namespace="envoy-gateway-system", phase="Running"})
+```
 ## 4️⃣ configurazione dashboard Loki Grafana
 
 QUI SOTTO DASHBOARD PER LOKI PER I LOG DEI SINGOLI CONTAINER
