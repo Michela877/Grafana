@@ -20,7 +20,7 @@ spec:
         fsGroup: 65534
       containers:
       - name: prometheus
-        image: prom/prometheus:v3.7.3 #v3.7.3 fino a qui verificata e funzioinante creato inizialmente con latest
+        image: prom/prometheus:v3.8.1 #v3.7.3 fino a qui verificata e funzioinante creato inizialmente con latest
         args:                                     # <-- aggiungi questa sezione per retention
         - "--config.file=/etc/prometheus/prometheus.yml"
         - "--storage.tsdb.path=/prometheus"

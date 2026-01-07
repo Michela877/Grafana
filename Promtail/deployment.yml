@@ -28,7 +28,7 @@ spec:
         operator: Exists
       containers:
       - name: promtail
-        image: grafana/promtail:3.5.8 # creato inizialmente con la 2.9.3
+        image: grafana/promtail:3.6.3 # creato inizialmente con la 2.9.3
         args:
           - --config.file=/etc/promtail/promtail.yaml
           - --client.external-labels=cluster=local
