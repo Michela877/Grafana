@@ -84,7 +84,11 @@ una volta creato il tutto bisognera creare le regole di alert questa qui sotto b
 questa regola sotto manda gli alert per ogni errore che fa il pod quindi crashloop imagepullerro ecc anche i container creating gestisce tutto cio che succede
 
 2. Define query and alert condition
-prometheus Options 5 minutes, MD = 43200, Min. Interval = 1
+prometheus Options 5 minutes, MD = 43200, Min. Interval = 1 questa lunga e la !!DEFINITIVA!!
+```bash
+sum by(pod, namespace, reason) (kube_pod_container_status_waiting_reason{namespace=~"asv-apps|envoy-gateway-system|monitoring|flux-system|gatekeeper-system|kube-node-lease|kube-public|kube-system|default"})
+```
+Options Legend: {{pod}} - {{reason}} - {{namespace}} Format: Time series Step: Type: Instant
 ```bash
 sum by(pod, reason) (kube_pod_container_status_waiting_reason{namespace="asv-apps"})
 ```
@@ -110,6 +114,10 @@ Alert state if execution error or timeout (normal)
 6. Configure notification message
 ```bash
 Pod {{ $labels.pod }} nel namespace nomenamespaces è in stato {{ $labels.reason }}
+```
+6. Configure notification message
+```bash
+Pod {{ $labels.pod }} nel namespace {{ $labels.namespace }} è in stato {{ $labels.reason }}
 ```
 
 # creazione alert alerting su rules per richieste http
