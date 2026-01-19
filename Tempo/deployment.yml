@@ -37,11 +37,11 @@ spec:
             - "-config.file=/etc/tempo/tempo.yaml"
           resources:
             requests:
-              memory: "512Mi"
-              cpu: "200m"
+              memory: "256Mi"
+              cpu: "5m"
             limits:
-              memory: "1Gi"
-              cpu: "1000m"
+              memory: "512mi"
+              cpu: "20m"
           securityContext:
             runAsUser: 10001
             runAsGroup: 10001

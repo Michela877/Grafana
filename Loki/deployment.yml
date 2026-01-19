@@ -28,11 +28,11 @@ spec:
             - "-config.file=/etc/loki/loki.yaml"
           resources:
             requests:
-              memory: "512Mi"
-              cpu: "100m"
+              memory: "150Mi"
+              cpu: "5m"
             limits:
-              memory: "1Gi"
-              cpu: "500m"
+              memory: "300mi"
+              cpu: "20m"
           securityContext:
             runAsUser: 10001
             runAsGroup: 10001

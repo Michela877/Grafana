@@ -46,11 +46,11 @@ spec:
           value: "Opportunistic"         # fine configurazione smtp grafana
         resources:
           requests:
-            memory: "256Mi"
-            cpu: "100m"
+            memory: "150Mi"
+            cpu: "10m"
           limits:
-            memory: "512Mi"
-            cpu: "500m"
+            memory: "300Mi"
+            cpu: "50m"
         securityContext:
           runAsUser: 472
           runAsGroup: 472

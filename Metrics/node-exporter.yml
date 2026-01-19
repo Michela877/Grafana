@@ -26,11 +26,11 @@ spec:
         - --path.sysfs=/host/sys
         resources:
           limits:
-            cpu: 200m
-            memory: 180Mi
+            cpu: 20m
+            memory: 128Mi
           requests:
-            cpu: 100m
-            memory: 100Mi
+            cpu: 5m
+            memory: 64Mi
         volumeMounts:
         - name: rootfs
           mountPath: /host
