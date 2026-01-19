@@ -34,11 +34,11 @@ spec:
         - containerPort: 9090
         resources:
           requests:
-            memory: "512mi"
+            memory: "512Mi"
             cpu: "10m"
           limits:
             memory: "1Gi"
-            cpu: "50m"
+            cpu: "70m"
         securityContext:
           runAsUser: 65534
           runAsGroup: 65534
