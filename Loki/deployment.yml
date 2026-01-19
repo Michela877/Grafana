@@ -29,10 +29,10 @@ spec:
           resources:
             requests:
               memory: "150Mi"
-              cpu: "5m"
+              cpu: "15m"
             limits:
               memory: "300Mi"
-              cpu: "20m"
+              cpu: "30m"
           securityContext:
             runAsUser: 10001
             runAsGroup: 10001
