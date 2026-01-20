@@ -50,7 +50,7 @@ spec:
             cpu: "10m"
           limits:
             memory: "300Mi"
-            cpu: "50m"
+            cpu: "100m"
         securityContext:
           runAsUser: 472
           runAsGroup: 472
