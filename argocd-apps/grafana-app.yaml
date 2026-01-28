@@ -5,16 +5,13 @@ metadata:
   namespace: argocd
 spec:
   project: default
-
   source:
     repoURL: https://github.com/Michela877/Grafana.git
-    targetRevision: argocd
-    path: Grafana/apps/Grafana
-
+    targetRevision: argocd   # branch dedicato ArgoCD
+    path: apps/Grafana       # qui punta al Kustomize di Grafana
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
-
   syncPolicy:
     automated:
       prune: true
