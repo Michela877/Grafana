@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: grafana
+  name: prometheus
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/Michela877/Grafana.git
     targetRevision: argocd   # branch dedicato ArgoCD
-    path: apps/Grafana       # qui punta al Kustomize di Grafana
+    path: apps/Prometheus      # qui punta al Kustomize di Grafana
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
