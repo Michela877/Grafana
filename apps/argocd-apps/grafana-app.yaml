@@ -8,8 +8,8 @@ spec:
 
   source:
     repoURL: https://github.com/Michela877/Grafana.git
-    targetRevision: main
-    path: apps/grafana
+    targetRevision: argocd
+    path: Grafana/apps/Grafana
 
   destination:
     server: https://kubernetes.default.svc
