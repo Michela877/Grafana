@@ -1,3 +1,5 @@
+# una volta installato tutto per esporre il servizio vi è all'interno del repo sia httproute per envoygateway ed anche ingress per nginx questo va applicato manualmente necessita di configurazioni
+
 # prima di applicare il deployment creare un account gmail per gli alert e una password per le app su sicurezza
 qui sotto è uno script per creare il secret per far funzionare la configurazione della email versione gmail
 
