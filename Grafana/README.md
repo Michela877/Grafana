@@ -1,24 +1,26 @@
 # prima di applicare il deployment creare un account gmail per gli alert e una password per le app su sicurezza
-qui sotto dove vi sara il deployemnt dovrete configuare le tue email dove ci sta scritto tuoindirizzo
+qui sotto è uno script per creare il secret per far funzionare la configurazione della email versione gmail
 
 ```bash
-        - name: GF_SMTP_ENABLED
-          value: "true"
-        - name: GF_SMTP_HOST
-          value: "smtp.gmail.com:587"
-        - name: GF_SMTP_USER
-          value: "tuoindirizzo@gmail.com"
-        - name: GF_SMTP_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: smtp-secret
-              key: password
-        - name: GF_SMTP_FROM_ADDRESS
-          value: "tuoindirizzo@gmail.com"
-        - name: GF_SMTP_SKIP_VERIFY
-          value: "true"
-        - name: GF_SMTP_STARTTLS_POLICY
-          value: "Opportunistic"
+# Definire le variabili
+
+$GF_SECURITY_ADMIN_USER="admin"
+$GF_SECURITY_ADMIN_PASSWORD="admin"
+$GF_SMTP_ENABLED="true"
+$GF_SMTP_HOST="smtp.gmail.com:587"
+$GF_SMTP_USER="tua-email@gmail.com"
+$GF_SMTP_PASSWORD="password-applicativa-gmail"
+$GF_SMTP_FROM_ADDRESS="tua-email@gmail.com"
+$GF_SMTP_FROM_NAME="Alerting Grafana"
+$GF_SMTP_SKIP_VERIFY="false"
+$GF_SMTP_STARTTLS_POLICY="Opportunistic"
+
+#inserire le nuove varibili password applicativi email alerting grafana da cambiare tutto e mettere qui nel secret qui sotto un esempio di come è stato creato
+
+
+kubectl delete secret grafana-smtp-secret -n monitoring
+# Creare il Secret usando queste variabili
+kubectl create secret generic grafana-smtp-secret -n monitoring --from-literal=GF_SECURITY_ADMIN_USER=$GF_SECURITY_ADMIN_USER --from-literal=GF_SECURITY_ADMIN_PASSWORD=$GF_SECURITY_ADMIN_PASSWORD --from-literal=GF_SMTP_ENABLED=$GF_SMTP_ENABLED --from-literal=GF_SMTP_HOST=$GF_SMTP_HOST --from-literal=GF_SMTP_USER=$GF_SMTP_USER --from-literal=GF_SMTP_PASSWORD=$GF_SMTP_PASSWORD --from-literal=GF_SMTP_FROM_ADDRESS=$GF_SMTP_FROM_ADDRESS --from-literal=GGF_SMTP_SKIP_VERIFY=$GF_SMTP_SKIP_VERIFY --from-literal=GF_SMTP_STARTTLS_POLICY=$GF_SMTP_STARTTLS_POLICY --from-literal=GF_SMTP_FROM_NAME=$GF_SMTP_FROM_NAME
 ```
 
 # creazione del secret password delle app su gmail
@@ -37,29 +39,32 @@ stringData:
 
 ```
 
-## 2️⃣ versione outlook
+## 2️⃣ versione outlook azure
 
 # prima di applicare il deployment creare un account outlook per gli alert e una password per le app su sicurezza
-qui sotto dove vi sara il deployemnt dovrete configuare le tue email dove ci sta scritto tuoindirizzo
+qui sotto è uno script per creare il secret per far funzionare la configurazione della email versione azure outlook per versione semplice creare password applicativa outlook e usare email su username e password applicativa su password come per la impostazione gmail
 
 ```bash
-        - name: GF_SMTP_ENABLED
-          value: "true"
-        - name: GF_SMTP_HOST
-          value: "smtp.office365.com:587"
-        - name: GF_SMTP_USER
-          value: "youruser@domain.com"
-        - name: GF_SMTP_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: smtp-secret
-              key: password
-        - name: GF_SMTP_FROM_ADDRESS
-          value: "youruser@domain.com"
-        - name: GF_SMTP_SKIP_VERIFY
-          value: "true"
-        - name: GF_SMTP_STARTTLS_POLICY
-          value: "Opportunistic"
+# Definire le variabili
+
+$GF_SECURITY_ADMIN_USER="admin"
+$GF_SECURITY_ADMIN_PASSWORD="admin"
+$GF_SMTP_ENABLED="true"
+$GF_SMTP_HOST="smtp.azurecomm.net:587"
+$GF_SMTP_USER="<communicationServiceName>.<applicationId>.<tenantId>"
+$GF_SMTP_PASSWORD="<valueId>"
+$GF_SMTP_FROM_ADDRESS="no-reply.alert@tuodominioallegatoapplicationID.it"
+$GF_SMTP_FROM_NAME="Alerting Grafana"
+$GF_SMTP_SKIP_VERIFY="false"
+$GF_SMTP_STARTTLS_POLICY="MandatoryStartTLS"
+
+#inserire le nuove varibili password applicativi email alerting grafana da cambiare tutto e mettere qui nel secret qui sotto un esempio di come è stato creato
+
+
+kubectl delete secret grafana-smtp-secret -n monitoring
+# Creare il Secret usando queste variabili
+kubectl create secret generic grafana-smtp-secret -n monitoring --from-literal=GF_SECURITY_ADMIN_USER=$GF_SECURITY_ADMIN_USER --from-literal=GF_SECURITY_ADMIN_PASSWORD=$GF_SECURITY_ADMIN_PASSWORD --from-literal=GF_SMTP_ENABLED=$GF_SMTP_ENABLED --from-literal=GF_SMTP_HOST=$GF_SMTP_HOST --from-literal=GF_SMTP_USER=$GF_SMTP_USER --from-literal=GF_SMTP_PASSWORD=$GF_SMTP_PASSWORD --from-literal=GF_SMTP_FROM_ADDRESS=$GF_SMTP_FROM_ADDRESS --from-literal=GGF_SMTP_SKIP_VERIFY=$GF_SMTP_SKIP_VERIFY --from-literal=GF_SMTP_STARTTLS_POLICY=$GF_SMTP_STARTTLS_POLICY --from-literal=GF_SMTP_FROM_NAME=$GF_SMTP_FROM_NAME
+
 ```
 
 # creazione del secret password delle app su gmail
