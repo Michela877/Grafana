@@ -5,6 +5,11 @@ metadata:
   namespace: monitoring
 spec:
   replicas: 1
+  strategy:
+    type: RollingUpdate      #aggiunto questa parte per pvc butta giu il pod e poi ne avvia uno nuovo
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 0
   selector:
     matchLabels:
       app: prometheus
