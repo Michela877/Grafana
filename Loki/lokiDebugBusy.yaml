@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: loki-debug
+  namespace: monitoring
+spec:
+  containers:
+  - name: debug
+    image: busybox
+    command: ["sleep", "3600"]
+    volumeMounts:
+    - name: loki-storage
+      mountPath: /loki
+  volumes:
+  - name: loki-storage
+    persistentVolumeClaim:
+      claimName: loki-pvc
+  restartPolicy: Never
+#kubectl exec -it loki-debug -n monitoring -- sh
