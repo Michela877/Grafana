@@ -50,7 +50,10 @@ spec:
               readOnly: true
             # PersistentVolumeClaim per storage log
             - name: loki-storage
+            #aggiunto tmp perche è tutto read only e il compactor non cancella i log perche legge il tmp solo in lettura
               mountPath: /loki
+            - name: tmp
+              mountPath: /tmp
       volumes:
         - name: config
           configMap:
@@ -58,3 +61,6 @@ spec:
         - name: loki-storage
           persistentVolumeClaim:
             claimName: loki-pvc
+        - name: tmp
+          emptyDir: {} 
+
