@@ -17,3 +17,4 @@ spec:
       claimName: loki-pvc
   restartPolicy: Never
 #kubectl exec -it loki-debug -n monitoring -- sh
+#kubectl scale deployment loki -n monitoring --replicas=0
