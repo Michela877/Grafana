@@ -45,7 +45,7 @@ spec:
               memory: "256Mi"
               cpu: "10m"
             limits:
-              memory: "1Gi"
+              memory: "2Gi"
               cpu: "200m"
           securityContext:
             runAsUser: 10001
